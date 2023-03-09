@@ -304,6 +304,21 @@ async function createUser({
     }
   }
   
+  async function getAllTags() {
+    try {
+      const { rows: tagId } = await client.query(`
+        SELECT * FROM tags;
+      `);
+
+      const tags = await Promise.all(tagId.map(
+        tags => getTagById( tags.id )
+      ));
+      return tags;
+    } catch (error) {
+      throw error;
+    }
+  }
+
   async function getPostsByUser(userId) {
     try {
       const { rows: postIds } = await client.query(`
@@ -335,7 +350,8 @@ async function createUser({
     addTagsToPost,
     createTags,
     getPostById,
-    createPostTag
+    createPostTag,
+    getAllTags
   }
 
 
@@ -343,7 +359,7 @@ async function createUser({
 
 
 
-  
+
 /*
 const { Client } = require('pg') // imports the pg module
 
