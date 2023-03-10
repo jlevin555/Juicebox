@@ -309,15 +309,13 @@ async function createUser({
       const { rows: tagId } = await client.query(`
         SELECT * FROM tags;
       `);
-
-      const tags = await Promise.all(tagId.map(
-        tags => getTagById( tags.id )
-      ));
-      return tags;
+      
+      return tagId;
     } catch (error) {
       throw error;
     }
   }
+
 
   async function getPostsByUser(userId) {
     try {
